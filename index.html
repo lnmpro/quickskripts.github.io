@@ -180,6 +180,89 @@
             color: #7f8c8d;
         }
         
+        /* Downloads Section */
+        .downloads {
+            padding: 2rem 0;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .downloads-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 0 1.5rem;
+        }
+        
+        .downloads-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 0 1.5rem;
+        }
+        
+        .download-item {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .download-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .download-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .download-item h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .download-item p {
+            color: #7f8c8d;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .download-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #95a5a6;
+            margin-bottom: 1rem;
+        }
+        
+        .download-link {
+            display: block;
+            text-align: center;
+            background-color: var(--success);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .download-link:hover {
+            background-color: #27ae60;
+        }
+        
+        /* Content Container */
+        #app-content {
+            min-height: calc(100vh - 300px);
+        }
+        
         /* Footer */
         footer {
             background-color: var(--primary);
@@ -223,8 +306,8 @@
                 </div>
                 <nav>
                     <ul>
-                        <li><a href="#" class="active">Dashboard</a></li>
-                        <li><a href="downloads.html">Downloads</a></li>
+                        <li><a href="#" data-route="dashboard" class="nav-link active">Dashboard</a></li>
+                        <li><a href="#" data-route="downloads" class="nav-link">Downloads</a></li>
                         <li><a href="https://discord.gg/TDqgYu5sjk">Discord</a></li>
                     </ul>
                 </nav>
@@ -232,34 +315,67 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h2>WELCOME TO QUICKSCRIPTS</h2>
-            <p>Here you can see our scripts and download them.</p>
-            <a href="downloads.html" class="btn">SEE THE SCRIPTS</a>
-        </div>
-    </section>
+    <!-- Main Content Area -->
+    <div id="app-content">
+        <!-- Dashboard View -->
+        <div id="dashboard-view" class="view">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="container">
+                    <h2>WELCOME TO QUICKSCRIPTS</h2>
+                    <p>Here you can see our scripts and download them.</p>
+                    <a href="#" data-route="downloads" class="btn">SEE THE SCRIPTS</a>
+                </div>
+            </section>
 
-    <!-- Dashboard Section -->
-    <section class="dashboard">
-        <div class="container">
-            <h2 class="section-title">Dashboard</h2>
-            
-            <div class="stats-cards">
-                <div class="stat-card">
-                    <i class="fas fa-download"></i>
-                    <h3>1,247</h3>
-                    <p>DOWNLOADS</p>
+            <!-- Dashboard Section -->
+            <section class="dashboard">
+                <div class="container">
+                    <h2 class="section-title">Dashboard</h2>
+                    
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <i class="fas fa-download"></i>
+                            <h3>1,247</h3>
+                            <p>DOWNLOADS</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-code"></i>
+                            <h3>1</h3>
+                            <p>ACTIVE SCRIPTS</p>
+                        </div>
+                    </div>
+                 </div>
+            </section>
+        </div>
+
+        <!-- Downloads View -->
+        <div id="downloads-view" class="view" style="display: none;">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="container">
+                    <h2>DOWNLOAD MINECRAFT SCRIPTS</h2>
+                    <p>Find and download the best Minecraft scripts for your server. All scripts are tested and fully functional.</p>
                 </div>
-                <div class="stat-card">
-                    <i class="fas fa-code"></i>
-                    <h3>1</h3>
-                    <p>ACTIVE SCRIPTS</p>
+            </section>
+
+            <!-- Downloads Section -->
+            <section class="downloads">
+                <div class="container">
+                    <div class="downloads-header">
+                        <h2 style="color: var(--primary);">Scripts available</h2>
+                        <div>
+                            <input type="text" id="search-scripts" placeholder="Search script..." style="padding: 8px; border: 1px solid #ddd; border-radius: 4px; width: 250px;">
+                        </div>
+                    </div>
+                    
+                    <div class="downloads-list" id="scripts-list">
+                        <!-- Script items will be added here by JavaScript -->
+                    </div>
                 </div>
-            </div>
-         </div>
-    </section>
+            </section>
+        </div>
+    </div>
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -273,5 +389,143 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Sample script data
+        const scripts = [
+            {
+                id: 1,
+                name: "Custom Pets",
+                description: "Custom pets with effect on right click (Like PikaNetwork Skypvp).",
+                link: "https://example.com/download/advanced-teleport"
+            },
+            {
+                id: 2,
+                name: "Clear Lag",
+                description: "Every 3 minutes clear all drops on server, and fix lag.",
+                link: "https://example.com/download/economy-system"
+            }
+        ];
+
+        // Router functionality
+        const routes = {
+            dashboard: 'dashboard-view',
+            downloads: 'downloads-view'
+        };
+
+        // Function to render scripts
+        function renderScripts(scriptsToRender) {
+            const scriptsList = document.getElementById('scripts-list');
+            if (!scriptsList) return;
+            
+            scriptsList.innerHTML = '';
+            
+            scriptsToRender.forEach(script => {
+                const scriptElement = document.createElement('div');
+                scriptElement.className = 'download-item';
+                scriptElement.innerHTML = `
+                    <div class="download-icon">
+                        <i class="fas fa-file-code"></i>
+                    </div>
+                    <h3>${script.name}</h3>
+                    <p>${script.description}</p>
+                    <a href="${script.link}" class="download-link" target="_blank">Download</a>
+                `;
+                scriptsList.appendChild(scriptElement);
+            });
+        }
+
+        // Function to filter scripts based on search
+        function filterScripts(searchTerm) {
+            const filteredScripts = scripts.filter(script => 
+                script.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                script.description.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            renderScripts(filteredScripts);
+        }
+
+        // Function to show a view
+        function showView(viewName) {
+            // Hide all views
+            Object.values(routes).forEach(viewId => {
+                const view = document.getElementById(viewId);
+                if (view) {
+                    view.style.display = 'none';
+                }
+            });
+
+            // Show the selected view
+            const selectedView = document.getElementById(routes[viewName]);
+            if (selectedView) {
+                selectedView.style.display = 'block';
+            }
+
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-route') === viewName) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Update page title
+            const titles = {
+                dashboard: 'QuickSkripts - Dashboard',
+                downloads: 'QuickSkripts - Downloads'
+            };
+            document.title = titles[viewName] || 'QuickSkripts';
+
+            // Initialize downloads view if needed
+            if (viewName === 'downloads') {
+                renderScripts(scripts);
+            }
+        }
+
+        // Function to navigate
+        function navigate(route) {
+            showView(route);
+            // Update URL without page reload
+            window.history.pushState({ route }, '', route === 'dashboard' ? '/' : `/${route}`);
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get current route from URL
+            const currentPath = window.location.pathname;
+            let initialRoute = 'dashboard';
+            
+            if (currentPath.includes('downloads')) {
+                initialRoute = 'downloads';
+            }
+
+            // Show initial view
+            showView(initialRoute);
+
+            // Setup navigation links
+            document.querySelectorAll('.nav-link, [data-route]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const route = this.getAttribute('data-route');
+                    if (route) {
+                        navigate(route);
+                    }
+                });
+            });
+
+            // Setup search functionality for downloads
+            const searchInput = document.getElementById('search-scripts');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    filterScripts(this.value);
+                });
+            }
+
+            // Handle browser back/forward buttons
+            window.addEventListener('popstate', function(e) {
+                const route = e.state ? e.state.route : (window.location.pathname.includes('downloads') ? 'downloads' : 'dashboard');
+                showView(route);
+            });
+        });
+    </script>
 </body>
 </html>
