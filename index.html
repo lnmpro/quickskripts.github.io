@@ -493,7 +493,7 @@
         function navigate(route) {
             showView(route);
             // Update URL without page reload
-            window.history.pushState({ route }, '', route === 'dashboard' ? '/' : `/${route}`);
+            window.location.hash = route;
         }
 
         // Initialize the app
@@ -502,7 +502,7 @@
             const currentPath = window.location.pathname;
             let initialRoute = 'dashboard';
             
-            if (currentPath.includes('downloads')) {
+            if (window.location.hash.includes('downloads')) {
                 initialRoute = 'downloads';
             }
 
@@ -536,4 +536,5 @@
         });
     </script>
 </body>
+
 </html>
